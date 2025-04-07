@@ -56,7 +56,9 @@ This project involves the development of a **Mortgage Calculator** web applicati
      sudo systemctl restart apache2
      ```
 
-### 4. **Setting Up DNS Using AWS Route 53**
+### 4. **Setting Up DNS Using namecheap.com and AWS Route 53**
+   - **Namecheap.com** 
+   - Used namecheap.com to get a domain name and pinged it to my server
    - **Accessed AWS Route 53** from the AWS Management Console.
    - Created a **hosted zone** for the domain `mortagecalculator.click` in Route 53.
    - Created a new **A record** to point to the **Elastic IP** (65.2.161.89) of the EC2 instance:
