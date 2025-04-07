@@ -2,6 +2,8 @@
 
 ## Contact Information
 - **Name**: Asis Hang Rai
+- **University**: Murdoch University 
+- **Student ID**: 35524152 
 - **Email**: arenrai18@gmail.com
 ## Overview
 This project involves the development of a **Mortgage Calculator** web application hosted on an **Ubuntu Server** running on an AWS EC2 instance. The website is accessible via the domain **mortagecalculator.click**. This project integrates **SSL** for security, **DNS** for domain management, and a **cloud server** for hosting.
@@ -11,7 +13,7 @@ This project involves the development of a **Mortgage Calculator** web applicati
 - **Cloud Hosting**: AWS EC2
 - **DNS Management**: AWS Route 53
 - **License**: MIT License
-- 
+
 ## Setup Process
 ### 1. Launching and Connecting to the EC2 Instance
    - Launched an **Ubuntu 20.04 EC2 instance** on AWS.
