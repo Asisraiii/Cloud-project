@@ -3,61 +3,137 @@
 ## Overview
 This project involves the development of a **Mortgage Calculator** web application hosted on an **Ubuntu Server** running on an AWS EC2 instance. The website is accessible via the domain **mortagecalculator.click**. This project integrates **SSL** for security, **DNS** for domain management, and a **cloud server** for hosting.
 
-### Technologies Used:t
+### Technologies Used:
+- **Frontend**: HTML, CSS, JavaScript
 - **Web Server**: Apache on Ubuntu Server
 - **SSL**: Certbot
 - **Cloud Hosting**: AWS EC2
+- **DNS Management**: AWS Route 53
 
-## Ubuntu Server Setup
-1. **Set up the Ubuntu server** on AWS EC2 instance:
-   - Launched an Ubuntu instance on AWS EC2.
-   - Configured the EC2 instance to have a static IP for reliable domain binding.
+## Detailed Steps
 
-2. **Installed Apache** as the web server:
-   - Updated the package list:
+### 1. **Setting Up the Ubuntu Server (AWS EC2)**
+   - Launched an **Ubuntu 20.04 EC2 instance** on AWS.
+   - Configured **Elastic IP** to ensure the instance has a static IP address.
+   - Opened necessary **ports** (80 for HTTP, 443 for HTTPS, and 22 for SSH) in the AWS security group to allow external access to the server.
+
+#### 1.1 **Connecting EC2 Instance to Ubuntu via SSH**
+   - During EC2 instance setup, created a **key pair** named `my-key.pem` and downloaded it to my local machine.
+   - Moved the key file to a secure location and set proper permissions:
+     ```bash
+     chmod 400 ~/Downloads/my-key.pem
+     ```
+   - Connected to the EC2 instance from my local Ubuntu machine using the terminal:
+     ```bash
+     ssh -i ~/Downloads/my-key.pem ubuntu@65.2.161.89
+     ```
+   - Accepted the authenticity prompt and successfully accessed the EC2 server.
+   - (Optional) To make connecting easier, added an SSH config file at `~/.ssh/config`:
+     ```
+     Host mortgage-server
+         HostName 65.2.161.89
+         User ubuntu
+         IdentityFile ~/Downloads/my-key.pem
+     ```
+   - Then connected simply using:
+     ```bash
+     ssh mortgage-server
+     ```
+
+### 2. **Installing Apache Web Server**
+   - **Updated the package list** on the server:
      ```bash
      sudo apt update
      ```
-   - Installed Apache:
+   - **Installed Apache** web server:
      ```bash
      sudo apt install apache2
      ```
-
-3. **Configured Apache**:
-   - Modified the `/etc/apache2/sites-available/000-default.conf` file to set up the domain and point to the appropriate document root.
-
-4. **Installed Certbot for SSL/TLS certificates**:
-   - Installed Certbot and the Apache plugin:
-     bash
-     sudo apt install certbot python3-certbot-apache
-     
-   - Ran Certbot to obtain and configure SSL for Apache:
-     bash
-     sudo certbot --apache
+   - **Checked Apache status** to ensure it was running:
+     ```bash
+     sudo systemctl status apache2
+     ```
+   - **Started Apache** service (if not started automatically):
+     ```bash
+     sudo systemctl start apache2
      ```
 
-5. **Set up DNS**:
-   - Configured the DNS settings to point the domain **mortagecalculator.click** to the server's public IP address (65.2.161.89).
+### 3. **Configuring Apache for the Project**
+   - Edited the **Apache configuration file** (`/etc/apache2/sites-available/000-default.conf`) to set up the site:
+     - Set the `DocumentRoot` to point to the folder where the project files are located.
+   - Restarted Apache to apply changes:
+     ```bash
+     sudo systemctl restart apache2
+     ```
+
+### 4. **Setting Up DNS Using AWS Route 53**
+   - **Accessed AWS Route 53** from the AWS Management Console.
+   - Created a **hosted zone** for the domain `mortagecalculator.click` in Route 53.
+   - Created a new **A record** to point to the **Elastic IP** (65.2.161.89) of the EC2 instance:
+     - **Name**: `mortagecalculator.click`
+     - **Type**: `A - IPv4 address`
+     - **Value**: `65.2.161.89` (Elastic IP of the EC2 instance)
+   - Ensured that the **TTL** (Time to Live) was set to 300 seconds for quicker propagation.
+   - Updated the **domain registrar** settings to point to **AWS Route 53’s nameservers** provided by the hosted zone.
+
+### 5. **SSL/TLS Setup with Let's Encrypt**
+   - **Installed Certbot** and the Apache plugin:
+     ```bash
+     sudo apt install certbot python3-certbot-apache
+     ```
+   - **Obtained the SSL certificate** using Certbot:
+     ```bash
+     sudo certbot --apache
+     ```
+   - Followed the interactive prompts to:
+     - Confirm domain ownership.
+     - Configure Apache to automatically redirect HTTP traffic to HTTPS.
+   - **Tested SSL** by visiting `https://mortagecalculator.click` and ensuring that the site was served securely.
+
+### 6. **Deploying the Mortgage Calculator Web App**
+   - Developed the **Mortgage Calculator** using **HTML**, **CSS**, and **JavaScript**:
+     - Designed the form to input the loan amount, interest rate, and term.
+     - Implemented JavaScript to perform the mortgage calculation.
+   - **Placed the application files** in the Apache web server's root directory (`/var/www/html`).
+
+### 7. **Testing the Web App**
+   - Accessed the website via the domain `https://mortagecalculator.click` from a web browser.
+   - **Tested all functionalities** of the mortgage calculator to ensure accuracy in calculations.
+   - Verified that the website was correctly served over **HTTPS** and SSL certificate was valid.
+
+### 8. **Documenting the Project**
+   - Created this **README.md** file to provide an overview and detailed steps of the project.
+   - **Committed the changes** to the project repository using Git:
+     ```bash
+     git add README.md
+     git commit -m "Detailed README with step-by-step instructions and EC2 SSH setup"
+     git push
+     ```
 
 ## Development Timeline
-- **Week 1**:
+- **Week 3-5**:
     - Set up the server on AWS EC2 instance with Ubuntu.
     - Configured domain DNS to point to the server's IP address.
+    - Installed Apache on the server.
+    - Connected to EC2 instance from Ubuntu via SSH.
 
-- **Week 2**:
-    - Installed Apache on the Ubuntu server.
+- **Week 6-8**:
     - Developed the basic structure of the mortgage calculator using HTML, CSS, and JavaScript.
+    - Installed and configured SSL/TLS using Certbot on Apache to secure the website.
+    - Tested the server's accessibility via the domain name.
 
-- **Week 3**:
-    - Implemented SSL/TLS using Certbot on Apache to secure the website.
-    - Tested the DNS and SSL configurations to ensure the website is accessible over HTTPS.
+- **Week 6-10**:
+    - Finalized the mortgage calculator functionality.
+    - Completed the SSL/TLS configuration and ensured HTTPS was working correctly.
+    - Added all the required documentation to the repository.
 
-- **Week 4**:
-    - Completed the final deployment and tested server accessibility.
-    - Added detailed documentation to the project repository.
+- **Week 11**:
+    - Completed the final testing, making sure everything was functioning as expected.
+    - Pushed the final changes to the GitHub repository.
 
 ## Contact Information
-- **Name**: [ASIS HANG RAI Student ID:35524152]
+- **Name**: [ASIS HANG RAI ]
+- **Student ID**: [35524152]
 - **Email**: arenrai18@gmail.com
 
 ---
@@ -65,4 +141,3 @@ This project involves the development of a **Mortgage Calculator** web applicati
 ### Additional Information:
 - **Access the site**: The website can be accessed at [https://mortagecalculator.click](https://mortagecalculator.click).
 - **SSL/TLS**: The site is secured with SSL/TLS using Let's Encrypt, ensuring all traffic is encrypted.
-
