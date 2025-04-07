@@ -1,18 +1,19 @@
 # Mortgage Calculator Web App
 
+## Contact Information
+- **Name**: Asis Hang Rai
+- **Email**: arenrai18@gmail.com
 ## Overview
 This project involves the development of a **Mortgage Calculator** web application hosted on an **Ubuntu Server** running on an AWS EC2 instance. The website is accessible via the domain **mortagecalculator.click**. This project integrates **SSL** for security, **DNS** for domain management, and a **cloud server** for hosting.
 
-### Technologies Used:
-- **Frontend**: HTML, CSS, JavaScript
 - **Web Server**: Apache on Ubuntu Server
-- **SSL**: Certbot
+- **SSL**: Let's Encrypt with Certbot
 - **Cloud Hosting**: AWS EC2
 - **DNS Management**: AWS Route 53
-
-## Detailed Steps
-
-### 1. **Setting Up the Ubuntu Server (AWS EC2)**
+- **License**: MIT License
+- 
+## Setup Process
+### 1. Launching and Connecting to the EC2 Instance
    - Launched an **Ubuntu 20.04 EC2 instance** on AWS.
    - Configured **Elastic IP** to ensure the instance has a static IP address.
    - Opened necessary **ports** (80 for HTTP, 443 for HTTPS, and 22 for SSH) in the AWS security group to allow external access to the server.
@@ -21,24 +22,13 @@ This project involves the development of a **Mortgage Calculator** web applicati
    - During EC2 instance setup, created a **key pair** named `my-key.pem` and downloaded it to my local machine.
    - Moved the key file to a secure location and set proper permissions:
      ```bash
-     chmod 400 ~/Downloads/my-key.pem
+     chmod 400 ~/Downloads/ubuntu.pem
      ```
    - Connected to the EC2 instance from my local Ubuntu machine using the terminal:
      ```bash
-     ssh -i ~/Downloads/my-key.pem ubuntu@65.2.161.89
+     ssh -i ~/Downloads/ubuntu.pem ubuntu@65.2.161.89
      ```
    - Accepted the authenticity prompt and successfully accessed the EC2 server.
-   - (Optional) To make connecting easier, added an SSH config file at `~/.ssh/config`:
-     ```
-     Host mortgage-server
-         HostName 65.2.161.89
-         User ubuntu
-         IdentityFile ~/Downloads/my-key.pem
-     ```
-   - Then connected simply using:
-     ```bash
-     ssh mortgage-server
-     ```
 
 ### 2. **Installing Apache Web Server**
    - **Updated the package list** on the server:
@@ -117,27 +107,21 @@ This project involves the development of a **Mortgage Calculator** web applicati
     - Installed Apache on the server.
     - Connected to EC2 instance from Ubuntu via SSH.
 
-- **Week 6-8**:
+- **Week 6-10**:
     - Developed the basic structure of the mortgage calculator using HTML, CSS, and JavaScript.
     - Installed and configured SSL/TLS using Certbot on Apache to secure the website.
     - Tested the server's accessibility via the domain name.
-
-- **Week 6-10**:
     - Finalized the mortgage calculator functionality.
     - Completed the SSL/TLS configuration and ensured HTTPS was working correctly.
     - Added all the required documentation to the repository.
-
+    - Created a MIT Lisence file
 - **Week 11**:
     - Completed the final testing, making sure everything was functioning as expected.
     - Pushed the final changes to the GitHub repository.
 
-## Contact Information
-- **Name**: [ASIS HANG RAI ]
-- **Student ID**: [35524152]
-- **Email**: arenrai18@gmail.com
 
 ---
 
 ### Additional Information:
-- **Access the site**: The website can be accessed at [https://mortagecalculator.click](https://mortagecalculator.click).
-- **SSL/TLS**: The site is secured with SSL/TLS using Let's Encrypt, ensuring all traffic is encrypted.
+- **Access the site**: The website can be accessed at [https://mortagecalculator.click].
+.
