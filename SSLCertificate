@@ -1,0 +1,6 @@
+### SSL Certificate with Let's Encrypt
+
+I secured the website with an SSL certificate using **Certbot** and **Let's Encrypt** on my Apache server. After installation, the site is now accessible via:
+
+ https://mortagecalculator.click
+
